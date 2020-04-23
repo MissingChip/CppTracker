@@ -13,6 +13,8 @@ class Tracker
     public:
     uint add(T* item);
     void add(T* item, uint id);
+    uint add(T& item);
+    void add(T& item, uint id);
     T* remove(uint id);
     T* get(uint id);
     T* get_safe(uint id);
@@ -44,6 +46,14 @@ inline void Tracker<T>::add(T* item, uint id){
     items[id] = item;
     id_a = id+1;
     mtx.unlock();
+}
+template<class T>
+inline uint Tracker<T>::add(T& item){
+    return add(&item);
+}
+template<class T>
+inline void Tracker<T>::add(T& item, uint id){
+    add(&item);
 }
 template<class T>
 inline T* Tracker<T>::remove(uint id){
